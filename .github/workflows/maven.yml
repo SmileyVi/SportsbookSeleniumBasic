@@ -52,5 +52,5 @@ jobs:
     - name: Cleanup
       run: |
         # Assuming you have ChromeDriver in your PATH
-        rm $(which chromedriver)
+        sudo rm $(which chromedriver)
     
