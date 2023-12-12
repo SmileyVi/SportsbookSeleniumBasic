@@ -24,6 +24,12 @@ jobs:
         # Attempt to terminate Chrome processes
         pkill chrome || true
 
+                
+    - name: Cleanup
+      run: |
+        # Assuming you have ChromeDriver in your PATH
+        sudo rm $(which chromedriver)
+
     - name: Install dependencies
       run: |
         set -ex
@@ -64,9 +70,5 @@ jobs:
         # List Chrome processes
         ps aux | grep chrome
         
-        
-    - name: Cleanup
-      run: |
-        # Assuming you have ChromeDriver in your PATH
-        sudo rm $(which chromedriver)
+
     
