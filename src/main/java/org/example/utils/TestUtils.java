@@ -28,7 +28,7 @@ public class TestUtils  extends TestBase {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         logger.info("Current url is " + driver.getCurrentUrl());
         String currentDir = System.getProperty("user.dir");
-        FileUtils.copyFile(scrFile, new File(currentDir + "/screenshots/" + System.currentTimeMillis() + ".png"));
+        FileUtils.copyFile(scrFile, new File(currentDir + "/target/screenshots/" + System.currentTimeMillis() + ".png"));
 
     }
 
