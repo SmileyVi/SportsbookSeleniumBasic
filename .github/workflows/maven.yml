@@ -18,6 +18,23 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    - name: Terminate Chrome Processes
+      run: |
+        # Attempt to terminate Chrome processes
+        pkill chrome || true
+
+                
+    - name: Cleanup
+      run: |
+        # Assuming you have ChromeDriver in your PATH
+        sudo rm $(which chromedriver)
+
+    - name: Install dependencies
+      run: |
+        set -ex
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo apt install ./google-chrome-stable_current_amd64.deb
   
     - name: Build with Maven
       run: mvn clean test
@@ -42,4 +59,16 @@ jobs:
       with:
         name: test-artifacts
         path: target/screenshots
+    - name: Check System PATH
+      run: |
+        echo "Current PATH: $PATH"
+        # Add additional commands to check for the presence of Chrome executable in PATH
+        which google-chrome
+
+    - name: Check Chrome Processes
+      run: |
+        # List Chrome processes
+        ps aux | grep chrome
+        
+
     
