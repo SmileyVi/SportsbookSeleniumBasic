@@ -16,9 +16,6 @@ public class HomePage extends BasePage {
     @FindBy(css = "button[id='truste-consent-button']")
     WebElement acceptiAllCookiesButton;
 
-    @FindBy(css = "#title=Sports Betting | Bet Online Legally with DraftKings Sportsbook")
-    WebElement title;
-
     public HomePage() {
         PageFactory.initElements(driver, this);
     }
@@ -33,7 +30,6 @@ public class HomePage extends BasePage {
     }
 
     private WebElement getAcceptAllCookiesButton() {
-        //waitForElementVisible(acceptiAllCookiesButton, testConfig.getTimeout());
         return acceptiAllCookiesButton;
     }
 
