@@ -1,3 +1,6 @@
+name: Allure Report
+run-name: Creating Allure report
+
 on:
   push:
     branches-ignore:
@@ -14,9 +17,9 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
+			java-version: '17'
+			distribution: 'temurin'
+			cache: maven
 
       - name: Run Test
         run: ./mvnw verify
