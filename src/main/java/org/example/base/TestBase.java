@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.example.utils.WebEventListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 
@@ -40,7 +41,9 @@ public class TestBase {
         String browserName = prop.getProperty("browser");
 
         if(browserName.equals("chrome")){
-            driver = new ChromeDriver();
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("'--remote-debugging-pipe");
+            driver = new ChromeDriver(chromeOptions);
         }
         else if(browserName.equals("firefox")){
             driver = new FirefoxDriver();
