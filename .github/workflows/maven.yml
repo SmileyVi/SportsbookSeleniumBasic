@@ -48,4 +48,9 @@ jobs:
       with:
         name: test-artifacts
         path: target/screenshots
+
+    - name: Cleanup
+      run: |
+        # Assuming you have ChromeDriver in your PATH
+        rm $(which chromedriver)
     
