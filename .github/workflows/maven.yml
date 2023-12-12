@@ -23,7 +23,6 @@ jobs:
       run: |
         # Attempt to terminate Chrome processes
         pkill chrome || true
-
                 
     - name: Cleanup
       run: |
@@ -59,6 +58,23 @@ jobs:
       with:
         name: test-artifacts
         path: target/screenshots
+
+    - name: Check for Screenshots
+      run: |
+        if [ -d "target/screenshots" ]; then
+          echo "Screenshots directory exists."
+          ls -l target/screenshots
+        else
+          echo "Screenshots directory does not exist."
+        fi
+
+    - name: Archive Screenshots
+      if: success() && failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: screenshots
+        path: target/screenshots
+        
     - name: Check System PATH
       run: |
         echo "Current PATH: $PATH"
