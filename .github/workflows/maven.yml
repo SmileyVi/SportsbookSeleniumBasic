@@ -19,35 +19,40 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Terminate Chrome Processes
+      run: |
+        # Attempt to terminate Chrome processes
+        pkill chrome || true
+
     - name: Install dependencies
       run: |
         set -ex
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo apt install ./google-chrome-stable_current_amd64.deb
   
-    # - name: Build with Maven
-    #   run: mvn clean test
+    - name: Build with Maven
+      run: mvn clean test
       
-    # - name: Generate Allure report
-    #   run: mvn allure:report
+    - name: Generate Allure report
+      run: mvn allure:report
 
-    # - name: Upload Allure report
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: allure-results
-    #     path: target/site/allure-maven-plugin
+    - name: Upload Allure report
+      uses: actions/upload-artifact@v2
+      with:
+        name: allure-results
+        path: target/site/allure-maven-plugin
 
-    # - name: Upload Allure report artifacts
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: allure-report
-    #     path: target/allure-report
+    - name: Upload Allure report artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: allure-report
+        path: target/allure-report
 
-    # - name: Archive artifacts
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: test-artifacts
-    #     path: target/screenshots
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-artifacts
+        path: target/screenshots
     - name: Check System PATH
       run: |
         echo "Current PATH: $PATH"
@@ -58,6 +63,8 @@ jobs:
       run: |
         # List Chrome processes
         ps aux | grep chrome
+        
+        
     - name: Cleanup
       run: |
         # Assuming you have ChromeDriver in your PATH
