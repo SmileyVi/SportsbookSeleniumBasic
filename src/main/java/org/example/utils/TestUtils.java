@@ -1,6 +1,8 @@
 package org.example.utils;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.base.TestBase;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 public class TestUtils  extends TestBase {
-
+    private static final Logger logger = LogManager.getLogger(TestUtils.class);
     static JavascriptExecutor je;
 
     public static final String baseUrl = prop.getProperty("baseUrl");
@@ -24,8 +26,10 @@ public class TestUtils  extends TestBase {
 
     public static void takeScreenshotAtEndOfTest() throws IOException {
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        logger.info("Current url is " + driver.getCurrentUrl());
         String currentDir = System.getProperty("user.dir");
         FileUtils.copyFile(scrFile, new File(currentDir + "/screenshots/" + System.currentTimeMillis() + ".png"));
+
     }
 
     public static int getRandomValueInRange(int min, int max) {
@@ -37,7 +41,10 @@ public class TestUtils  extends TestBase {
     }
 
     public static WebElement getRandomElementFromList(List<WebElement> listWithElements) {
-        return listWithElements.get(TestUtils.getRandomValueInRange(0, listWithElements.size()-1));
+        if (listWithElements.size() > 2) {
+            return listWithElements.get(TestUtils.getRandomValueInRange(0, listWithElements.size()-1));
+        }
+        return listWithElements.get(0);
     }
 
     public static void explicitWait(){
@@ -58,5 +65,6 @@ public class TestUtils  extends TestBase {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeout));
         return wait.until(ExpectedConditions.visibilityOf(elements.get(0)));
     }
+
 }
 

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.example.utils.TestUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -37,7 +38,7 @@ public class LiveInGamePage extends BasePage {
     @FindBy(css="ul[aria-label='Subcategory options list'] > li")
     List<WebElement> betTypeOptions;
 
-    @FindBy(css="div[class='sportsbook-outcome-cell']")
+    @FindBy(xpath="//div[contains(@class,'sportsbook-outcome-cell')]/div[@role='button']")
     List<WebElement> bettingSelectionButtons;
 
     @FindBy(css="div[aria-label='Game Subcategory Selector'] > span[class='arrow']")
@@ -46,17 +47,14 @@ public class LiveInGamePage extends BasePage {
     @FindBy(css="div[class='sportsbook-header']")
     List<WebElement> eventHeaders;
 
-    @FindBy(css="div[class='sportsbook-header__title'] > a")
-    List<WebElement> sportEventLinks;
+    @FindBy(css="div[class='sportsbook-event-accordion__wrapper expanded'] > div[role='button'] > a")
+    List<WebElement> sportEventButtons;
 
-    @FindBy(css="div[class='sportsbook-accordion__children-wrapper']")
-    WebElement betSportsbook;
+    @FindBy(css="div[class='event-cell__name']")
+    List<WebElement> sportEventCells;
 
     @FindBy(css="table[class='sportsbook-table']")
     WebElement sportsbookTable;
-
-    @FindBy(css="table[class='sportsbook-table'] > tbody > tr")
-    List<WebElement> sportsbookTableRows;
 
     @FindBy(css="span[class='single-card-header__text-top-outcome-label']")
     WebElement betSlipForBetLabel;
@@ -69,10 +67,6 @@ public class LiveInGamePage extends BasePage {
         return sportCategories;
     }
 
-    private List<WebElement> getSportsEventHeaders() {
-        return eventHeaders;
-    }
-
     public boolean atLeastOneSportEventIsDisplayed() {
         return eventHeaders.size() > 0;
     }
@@ -81,12 +75,6 @@ public class LiveInGamePage extends BasePage {
         return betTypeSelectionDropdown;
     }
 
-    public boolean areBetOptionsDisplayed() {
-        if (betTypeOptions.size() == 0) {
-            return false;
-        }
-        return betTypeOptions.get(0).isDisplayed();
-    }
     public List<WebElement> getBetTypeOptions() {
         return betTypeOptions;
     }
@@ -118,65 +106,11 @@ public class LiveInGamePage extends BasePage {
         return getBetTypeOptions();
     }
 
-    public WebElement findBettingButton() throws InterruptedException {
-        List<WebElement> betOptions = getBetTypeOptionsFromDropdown();
-
-        WebElement bettingButton = null;
-        for (int i = 0; i < betOptions.size(); i++) {
-            try {
-                bettingButton = TestUtils.getRandomElementFromList(getBettingSelectionButtons());
-            } catch (TimeoutException ex) {
-                selectBetOptionFromDropdown(i);
-            }
-        }
-        return bettingButton;
-    }
-
-    public boolean dropdownIsAvailable() {
-        try {
-            return betTypeDropdownArrow.isDisplayed();
-        } catch (NoSuchElementException ex) {
-            return false;
-        }
-
-    }
-
-    public boolean isSportsbookBetTableIsDisplayed() {
-        try {
-            TestUtils.waitForElementVisible(sportsbookTable);
-            return sportsbookTable.isDisplayed();
-        } catch (TimeoutException ex) {
-            return false;
-        }
-
-    }
-
     public void changeBetType() {
         List<WebElement> betOptions = getBetTypeOptionsFromDropdown();
         if (betOptions.size() > 0) {
             betOptions.get(0).click();
         }
-    }
-
-    public String placeBetFromBetsTable() {
-
-        List<WebElement> rows = sportsbookTable.findElements(By.tagName("tr"));
-        int rowIndex = rows.size() - 1;
-
-        WebElement selectedRow = rows.get(rowIndex);
-        List<WebElement> bettingButtons = selectedRow.findElements(By.xpath(BET_BUTTONS_XPATH));
-
-        if (!bettingButtons.isEmpty()) {
-            WebElement randomBetButton = bettingButtons.get(random.nextInt(bettingButtons.size()));
-
-            WebElement correspondingBetName = randomBetButton.findElement(By.xpath(BET_NAMES_RELATED_XPATH));
-            betName = correspondingBetName.getText();
-            logger.info(String.format("Placing a bet for '%s'", betName));
-
-            randomBetButton.click();
-        }
-        return betName;
-
     }
 
     public String placeBetOnRandomButton() {
@@ -194,18 +128,6 @@ public class LiveInGamePage extends BasePage {
                 && getLoginToPlaceBetButton().getText().equals(LOGIN_TO_PLACE_BETS_BUTTON_TEXT);
     }
 
-    public void selectBetOptionFromDropdown(int indexOfOptionToSelect) throws InterruptedException {
-        WebElement betTypeDropdown = getBetTypeSelectionDropdown();
-        hoverOverElement(betTypeDropdown);
-
-        List<WebElement> betOptions = getBetTypeOptions();
-        WebElement betOptionToSelect = betOptions.get(indexOfOptionToSelect);
-        String betOptionName= betOptionToSelect.getText();
-        logger.info(String.format("Selecting '%s' bet option from dropdown menu", betOptionName));
-        TestUtils.explicitWait();
-        betOptionToSelect.click();
-    }
-
     public String selectRandomSport() {
         List<WebElement> availableSports = getSportCategoriesTabs();
         WebElement sport = TestUtils.getRandomElementFromList(availableSports);
@@ -219,7 +141,7 @@ public class LiveInGamePage extends BasePage {
         TestUtils.explicitWait();
     }
 
-    public EventPage clickOnRandomSportEvent(WebElement sportEventToClick) {
+    public EventPage clickOnSportEvent(WebElement sportEventToClick) {
         TestUtils.scrollToElement(sportEventToClick);
         sportEventToClick.click();
         TestUtils.waitForElementVisible(sportsbookLogo);
@@ -227,7 +149,12 @@ public class LiveInGamePage extends BasePage {
     }
 
     public WebElement getRandomSportEvent() {
-        return TestUtils.getRandomElementFromList(sportEventLinks);
+        try {
+            return TestUtils.getRandomElementFromList(sportEventButtons);
+        } catch (NoSuchElementException ex) {
+            return TestUtils.getRandomElementFromList(sportEventCells);
+        }
+
     }
 
     public boolean userIsOnLiveInGamesUrl() {

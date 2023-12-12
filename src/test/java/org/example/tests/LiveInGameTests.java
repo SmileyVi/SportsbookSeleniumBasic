@@ -1,6 +1,7 @@
 package org.example.tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.base.TestBase;
@@ -15,13 +16,13 @@ import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Feature("Live In-Game")
 public class LiveInGameTests extends TestBase {
     HomePage homePage;
     LiveInGamePage liveInGamePage;
     EventPage eventPage;
     TestUtils testUtils;
 
-    private final Integer timeout = Integer.parseInt(prop.getProperty("waitTimeout"));
     private static final Logger logger = LogManager.getLogger(LiveInGameTests.class);
     private String pageSource;
 
@@ -86,7 +87,7 @@ public class LiveInGameTests extends TestBase {
 
         String urlOnLivePage = liveInGamePage.getCurrentUrl();
 
-        eventPage = liveInGamePage.clickOnRandomSportEvent(eventLink);
+        eventPage = liveInGamePage.clickOnSportEvent(eventLink);
 
         assertNotEquals(urlOnLivePage, eventPage.getCurrentUrl(),
                 "After click on sport event link, user is not redirected.");
@@ -115,15 +116,6 @@ public class LiveInGameTests extends TestBase {
 
         liveInGamePage.selectRandomSport();
 
-        if (liveInGamePage.dropdownIsAvailable()) {
-            liveInGamePage.selectBetOptionFromDropdown(0);
-        }
-//
-//        if (liveInGamePage.isSportsbookBetTableIsDisplayed()) {
-//            betName = liveInGamePage.placeBetFromBetsTable();
-//        } else {
-//            betName = liveInGamePage.placeBetOnrandomButton();
-//        }
         betName = liveInGamePage.placeBetOnRandomButton();
         assertTrue(liveInGamePage.betSlipIsAdded(), String.format("Expected Bet slip for '%s' is missing.", betName));
         assertTrue(liveInGamePage.loginToPlaceBetsButtonIsDisplayed(), "The button is either not enabled or with unexpected text");

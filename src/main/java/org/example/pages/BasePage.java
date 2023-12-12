@@ -13,6 +13,7 @@ public class BasePage extends TestBase {
     public BasePage() {
         PageFactory.initElements(driver, this);
     }
+
     private final Logger logger = LogManager.getLogger(BasePage.class);
 
     @FindBy(css = "div[aria-label='DraftKings Sportsbook Logo']")
@@ -45,6 +46,12 @@ public class BasePage extends TestBase {
 
     public boolean isUrlContainsExpectedParams(String expectedPage, String additionalParam) {
         String currentUrl = getCurrentUrl();
-        return currentUrl.toLowerCase().contains(expectedPage) && currentUrl.toLowerCase().contains(additionalParam.toLowerCase());
+
+        return prepareStringForComparison(currentUrl).contains(prepareStringForComparison(expectedPage))
+                        && prepareStringForComparison(currentUrl).contains(prepareStringForComparison(additionalParam));
+    }
+
+    private String prepareStringForComparison(String input) {
+        return input.replace("-", "").replace(" ", "").toLowerCase();
     }
 }

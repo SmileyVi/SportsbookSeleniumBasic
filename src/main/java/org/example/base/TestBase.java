@@ -4,23 +4,22 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.utils.TestUtils;
+import org.example.utils.WebEventListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-
+import org.openqa.selenium.support.events.EventFiringDecorator;
 
 
 public class TestBase {
     private static final Logger logger = LogManager.getLogger(TestBase.class);
     public static WebDriver driver;
     public static Properties prop;
-
+    public static WebEventListener eventListener;
+    public  static EventFiringDecorator e_driver;
 
     public TestBase(){
         try {
@@ -48,27 +47,16 @@ public class TestBase {
         }
         logger.info("WebDriver is initialized...");
 
-//        e_driver = new EventFiringWebDriver(driver);
-        // Now create object of EventListerHandler to register it with EventFiringWebDriver
-//        eventListener = new WebEventListener();
-//        e_driver.register(eventListener);
-//        driver = e_driver;
+        eventListener = new WebEventListener();
+        EventFiringDecorator<WebDriver> decorator = new EventFiringDecorator<>(eventListener);
+        driver = decorator.decorate(driver);
 
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
-        //driver.manage().timeouts().pageLoadTimeout(TestUtils.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-        //driver.manage().timeouts().implicitlyWait(TestUtils.IMPLICIT_WAIT, TimeUnit.SECONDS);
 
-       // driver.get(prop.getProperty("url"));
+
 
     }
-
-
-
-
-
-
-
 
 
 }

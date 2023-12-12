@@ -1,5 +1,6 @@
 package org.example.tests;
 
+import io.qameta.allure.Feature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.base.TestBase;
@@ -10,21 +11,18 @@ import org.example.utils.TestUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+@Feature("A-Z Sports in side navigation panel")
 public class SideNavigationTests extends TestBase {
     SideNavigation sideNavigation;
     HomePage homePage;
     LeaguesPage leaguesPage;
     TestUtils testUtils;
 
-    private final Integer timeout = Integer.parseInt(prop.getProperty("waitTimeout"));
-
     private static final Logger logger = LogManager.getLogger(LiveInGameTests.class);
 
     static final String A_TO_Z_NAVIGATION_CATEGORY_NAME = "A-Z SPORTS";
-    private String pageSource;
 
     public SideNavigationTests() {
         super();
