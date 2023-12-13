@@ -13,7 +13,7 @@ public class HomePage extends BasePage {
     @FindBy(css = "a[data-test-id='Live In-Game-link']")
     WebElement linkLiveInGame;
 
-    @FindBy(css = "div>button[id='truste-consent-button']")
+    @FindBy(css = "button[id='truste-consent-button']")
     WebElement acceptiAllCookiesButton;
 
     public HomePage() {
@@ -26,6 +26,7 @@ public class HomePage extends BasePage {
 
     public void acceptAllCookies() {
         logger.info("Accepting all cookies...");
+        TestUtils.waitForElementVisible(getAcceptAllCookiesButton);
         getAcceptAllCookiesButton().click();
     }
 
