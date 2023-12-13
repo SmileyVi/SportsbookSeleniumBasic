@@ -14,7 +14,7 @@ public class HomePage extends BasePage {
     WebElement linkLiveInGame;
 
     @FindBy(css = "button[id='truste-consent-button']")
-    WebElement acceptiAllCookiesButton;
+    WebElement acceptAllCookiesButton;
 
     public HomePage() {
         PageFactory.initElements(driver, this);
@@ -26,13 +26,7 @@ public class HomePage extends BasePage {
 
     public void acceptAllCookies() {
         logger.info("Accepting all cookies...");
-        TestUtils.waitForElementVisible(getAcceptAllCookiesButton);
-        getAcceptAllCookiesButton().click();
+        TestUtils.waitForElementVisible(acceptAllCookiesButton);
+        acceptAllCookiesButton.click();
     }
-
-    private WebElement getAcceptAllCookiesButton() {
-        return acceptiAllCookiesButton;
-    }
-
 }
-
