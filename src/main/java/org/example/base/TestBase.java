@@ -41,12 +41,14 @@ public class TestBase {
         String browserName = prop.getProperty("browser");
 
         if(browserName.equals("chrome")){
+            WebDriverManager.chromedriver().setup();
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("'--remote-debugging-pipe");
             chromeOptions.addArguments("--headless=new");
             chromeOptions.addArguments("--disable-dev-shm-usage");
-            driver = new ChromeDriver(chromeOptions);
+            driver = WebDriverManager.chromedriver().capabilities(chromeOptions).create();
+            //driver = new ChromeDriver(chromeOptions);
         }
         else if(browserName.equals("firefox")){
             driver = new FirefoxDriver();
