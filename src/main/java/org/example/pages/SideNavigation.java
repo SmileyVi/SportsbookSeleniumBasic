@@ -22,8 +22,7 @@ public class SideNavigation extends BasePage {
     WebElement league;
     private static final String LEAGUES_LOCATOR = "//div[contains(@aria-label,'%s')]/..//a";
     static final By A_TO_Z_SPORTS_CSS_LOCATOR = By.xpath("//div[@aria-label='Expandable container A-Z SPORTS']");
-    static final By SPORTS_IN_CATEGORIES_CSS_LOCATOR = By.xpath(
-            "//div[starts-with(@aria-label,'Expandable container')]");
+    static final By SPORTS_IN_CATEGORIES_CSS_LOCATOR = By.xpath("//div[starts-with(@aria-label,'Expandable container')]");
 
     @FindBy(css = "div[aria-label='Expandable container A-Z SPORTS'")
     WebElement aToZSportsNavigationPanel;
@@ -68,8 +67,7 @@ public class SideNavigation extends BasePage {
     }
 
     public boolean sportLeaguesAreAvailable() {
-        return leagues.size() > 0 &&
-                leagues.get(0).isDisplayed();
+        return leagues.size() > 0 && leagues.get(0).isDisplayed();
     }
 
     public LeaguesPage navigateToSportLeague() {
