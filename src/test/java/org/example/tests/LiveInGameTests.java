@@ -2,8 +2,6 @@ package org.example.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.example.base.TestBase;
 import org.example.pages.HomePage;
 import org.example.pages.LiveInGamePage;
@@ -23,7 +21,6 @@ public class LiveInGameTests extends TestBase {
     EventPage eventPage;
     TestUtils testUtils;
 
-    private static final Logger logger = LogManager.getLogger(LiveInGameTests.class);
     private String pageSource;
 
     public LiveInGameTests() {

@@ -1,7 +1,5 @@
 package org.example.pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.example.base.TestBase;
 import org.example.utils.TestUtils;
 import org.openqa.selenium.WebElement;
@@ -13,8 +11,6 @@ public class BasePage extends TestBase {
     public BasePage() {
         PageFactory.initElements(driver, this);
     }
-
-    private final Logger logger = LogManager.getLogger(BasePage.class);
 
     @FindBy(css = "div[aria-label='DraftKings Sportsbook Logo']")
     WebElement sportsbookLogo;

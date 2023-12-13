@@ -24,9 +24,7 @@ public class WebEventListener extends TestBase implements WebDriverListener {
             logger.info("Taking screenshot...");
             TestUtils.takeScreenshotAtEndOfTest();
             e.printStackTrace();
-        } catch (IOException ex) {
-            e.printStackTrace();
-            throw new RuntimeException(ex);
+        } catch (IOException ignored) {
         }
     }
 
