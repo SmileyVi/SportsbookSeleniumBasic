@@ -13,7 +13,7 @@ public class HomePage extends BasePage {
     @FindBy(css = "a[data-test-id='Live In-Game-link']")
     WebElement linkLiveInGame;
 
-    @FindBy(css = "button[id*='truste-consent-button']")
+    @FindBy(id = "truste-consent-button")
     WebElement acceptiAllCookiesButton;
 
     public HomePage() {
