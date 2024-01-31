@@ -45,7 +45,7 @@ public class LiveInGameTests extends TestBase {
     public void verifySportEventsAreAvailable() {
         homePage.open(TestUtils.baseUrl);
         assertTrue(homePage.isSportsbookLogoDisplayed(), "Logo is not displayed.");
-        homePage.acceptAllCookies();
+        //homePage.acceptAllCookies();
 
         homePage.navigateToLiveInGamePage();
         assertTrue(liveInGamePage.userIsOnLiveInGamesUrl(), "Current URL is not expected!");
@@ -58,7 +58,7 @@ public class LiveInGameTests extends TestBase {
     public void verifyBetTypeSelection() {
         homePage.open(TestUtils.baseUrl);
         assertTrue(homePage.isSportsbookLogoDisplayed(), "Logo is not displayed.");
-        homePage.acceptAllCookies();
+        //homePage.acceptAllCookies();
 
         homePage.navigateToLiveInGamePage();
         assertTrue(liveInGamePage.userIsOnLiveInGamesUrl(), "Current URL is not expected!");
@@ -74,7 +74,7 @@ public class LiveInGameTests extends TestBase {
     public void verifyEventButtonRedirection() {
         homePage.open(TestUtils.baseUrl);
         assertTrue(homePage.isSportsbookLogoDisplayed(), "Logo is not displayed.");
-        homePage.acceptAllCookies();
+        //homePage.acceptAllCookies();
 
         homePage.navigateToLiveInGamePage();
         assertTrue(liveInGamePage.userIsOnLiveInGamesUrl(), "Current URL is not expected!");
@@ -107,7 +107,7 @@ public class LiveInGameTests extends TestBase {
         homePage.open(TestUtils.baseUrl);
         assertTrue(homePage.isSportsbookLogoDisplayed(), "Logo is not displayed.");
 
-        homePage.acceptAllCookies();
+       // homePage.acceptAllCookies();
         homePage.navigateToLiveInGamePage();
         assertTrue(liveInGamePage.userIsOnLiveInGamesUrl(), "Current URL is not expected!");
 
