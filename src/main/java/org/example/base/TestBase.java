@@ -47,7 +47,7 @@ public class TestBase {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("'--remote-debugging-pipe");
-            //chromeOptions.addArguments("--headless=new");
+            chromeOptions.addArguments("--headless=new");
             chromeOptions.addArguments("--disable-dev-shm-usage");
             driver = WebDriverManager.chromedriver().capabilities(chromeOptions).create();
             //driver = new ChromeDriver(chromeOptions);
