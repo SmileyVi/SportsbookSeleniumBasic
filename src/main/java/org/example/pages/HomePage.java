@@ -9,11 +9,12 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BasePage {
     private static final Logger logger = LogManager.getLogger(HomePage.class);
-    @FindBy(css = "a[data-test-id='Live In-Game-link']")
+
+    private static final String ID_ACCEPT_ALL_COOKIES_BUTTON_LOCATOR = "truste-consent-button";
+
+    @FindBy(xpath = "//a[text()='Live In-Game']")
     WebElement linkLiveInGame;
 
-    @FindBy(css = "button[id='truste-consent-button']")
-    WebElement acceptAllCookiesButton;
 
     public HomePage() {
         PageFactory.initElements(driver, this);
@@ -25,7 +26,7 @@ public class HomePage extends BasePage {
 
     public void acceptAllCookies() {
         logger.info("Accepting all cookies...");
-        TestUtils.waitForElementVisible(acceptAllCookiesButton);
+        WebElement acceptAllCookiesButton = TestUtils.getElementById(ID_ACCEPT_ALL_COOKIES_BUTTON_LOCATOR);
         acceptAllCookiesButton.click();
     }
 }

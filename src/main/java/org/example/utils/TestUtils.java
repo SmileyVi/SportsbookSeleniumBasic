@@ -66,5 +66,15 @@ public class TestUtils  extends TestBase {
         return wait.until(ExpectedConditions.visibilityOf(elements.get(0)));
     }
 
+    public static WebElement getElementByXpath(String locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeout));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
+    }
+
+    public static WebElement getElementById(String locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(timeout));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(By.id(locator)));
+    }
+
 }
 

@@ -2,6 +2,7 @@ package org.example.pages;
 
 import org.example.base.TestBase;
 import org.example.utils.TestUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -12,11 +13,10 @@ public class BasePage extends TestBase {
         PageFactory.initElements(driver, this);
     }
 
+    private static final String XPATH_SECTION_HEADER = "//nav[@class='sportsbook-breadcrumb']";
+
     @FindBy(css = "div[aria-label='DraftKings Sportsbook Logo']")
     WebElement sportsbookLogo;
-
-    @FindBy(css="nav .sportsbook-breadcrumb__end >h1")
-    WebElement sectionHeader;
 
     public void open(String url) {
         driver.get(url);
@@ -36,6 +36,8 @@ public class BasePage extends TestBase {
     }
 
     public String getSectionHeader() {
+        WebElement sectionHeader = TestUtils.getElementByXpath(XPATH_SECTION_HEADER);
+        //WebElement sectionHeader = findElementByXpath(XPATH_SECTION_HEADER);
         TestUtils.waitForElementVisible(sectionHeader);
         return sectionHeader.getText();
     }
@@ -49,5 +51,9 @@ public class BasePage extends TestBase {
 
     private String prepareStringForComparison(String input) {
         return input.replace("-", "").replace(" ", "").toLowerCase();
+    }
+
+    private WebElement findElementByXpath(String locator) {
+        return TestUtils.waitForElementVisible(driver.findElement(By.xpath(locator)));
     }
 }
